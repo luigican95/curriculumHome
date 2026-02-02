@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luigi Canistra - Backend Developer</title>
+    <meta name="description"
+        content="Backend Developer e laureando in Ingegneria Informatica. CV digitale e formati stampabili.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<body>
+
+    <!-- WEB LAYOUT -->
+    <div class="web-container">
+        <div class="download-buttons">
+            <button class="download-btn" onclick="printCV('standard')">🖨️ Stampa CV (con foto)</button>
+            <button class="download-btn short" onclick="printCV('short')">📝 Print Short CV</button>
+            <button class="download-btn europass" onclick="printCV('europass')">🇪🇺 Europass</button>
+        </div>
+
+
+        <header class="web-header">
+            <div class="web-header-content">
+                <div class="web-photo-container">
+                    <img src="" alt="Foto profilo" id="web-photo">
+                </div>
+                <h1 class="web-name" id="web-name"></h1>
+                <p class="web-title" id="web-title"></p>
+
+                <div class="web-contact">
+                    <div class="web-contact-item" id="web-email"></div>
+                    <div class="web-contact-item" id="web-phone"></div>
+                    <div class="web-contact-item">
+                        <span id="web-location"></span>
+                    </div>
+                    <div class="web-contact-item" id="web-linkedin-container" style="display:none;">
+                        <a href="#" target="_blank" id="web-linkedin">LinkedIn</a>
+                    </div>
+                    <div class="web-contact-item" id="web-github-container" style="display:none;">
+                        <a href="#" target="_blank" id="web-github">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="web-content">
+            <!-- Presentazione -->
+            <section class="web-section" id="web-presentazione-section">
+                <h2 class="web-section-title">Presentazione</h2>
+                <div class="web-experience-item">
+                    <div class="web-description" id="web-presentazione"></div>
+                </div>
+            </section>
+
+            <!-- Esperienza Lavorativa -->
+            <section class="web-section">
+                <h2 class="web-section-title">Esperienza Lavorativa</h2>
+                <div id="web-experience-list"></div>
+            </section>
+
+            <!-- Progetti -->
+            <section class="web-section">
+                <h2 class="web-section-title">Progetti Rilevanti</h2>
+                <div class="web-projects-grid" id="web-projects-list"></div>
+            </section>
+
+            <!-- Competenze Tecniche -->
+            <section class="web-section">
+                <h2 class="web-section-title">Competenze Tecniche</h2>
+                <div class="web-skills-grid" id="web-skills-grid"></div>
+            </section>
+
+            <!-- Formazione e altro -->
+            <section class="web-section">
+                <h2 class="web-section-title">Formazione e Altre Informazioni</h2>
+                <div id="web-education-list"></div>
+                <div
+                    style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:2rem;">
+                    <div style="background:#f0f9ff;padding:1.5rem;border-radius:12px;">
+                        <h4 style="color:var(--primary);margin-bottom:1rem;">Competenze Linguistiche</h4>
+                        <div id="web-languages"></div>
+                    </div>
+                    <div style="background:#f8fafc;padding:1.5rem;border-radius:12px;">
+                        <h4 style="color:var(--primary);margin-bottom:1rem;">Altre Informazioni</h4>
+                        <div id="web-other-info"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- STANDARD CV PRINT LAYOUT -->
+    <div class="print-container">
+        <div class="print-header">
+            <div class="print-photo-placeholder">
+                <img src="" alt="Foto profilo" id="print-photo"
+                    style="width:100px;height:130px;object-fit:cover;object-position:center;">
+            </div>
+            <div class="print-header-info">
+                <h1 class="print-name" id="print-name"></h1>
+                <div class="print-contact-info">
+                    <span id="print-date-of-birth"></span>
+                    <span id="print-email"></span>
+                    <span id="print-phone"></span>
+                    <span id="print-linkedin"></span>
+                    <span id="print-github"></span>
+                    <span id="print-location"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="print-section">
+            <h2 class="print-section-title">Esperienza Lavorativa</h2>
+            <div id="print-experience-list"></div>
+        </div>
+
+        <div class="print-section">
+            <h2 class="print-section-title">Competenze Tecniche</h2>
+            <div class="print-skills-grid" id="print-skills-grid"></div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="print-section">
+            <h2 class="print-section-title">Progetti Rilevanti</h2>
+            <div id="print-projects-list"></div>
+        </div>
+
+        <div class="print-section">
+            <h2 class="print-section-title">Istruzione e Formazione</h2>
+            <div id="print-education-list"></div>
+        </div>
+
+        <div class="print-two-column">
+            <div class="print-section">
+                <h2 class="print-section-title">Competenze Linguistiche</h2>
+                <div id="print-languages"></div>
+            </div>
+            <div class="print-section">
+                <h2 class="print-section-title">Altre Informazioni</h2>
+                <div id="print-other-info"></div>
+            </div>
+        </div>
+
+        <div class="print-footer" id="print-footer"></div>
+    </div>
+
+    <!-- SHORT CV PRINT LAYOUT -->
+    <div class="short-container">
+        <div class="cv-container">
+            <!-- HEADER -->
+            <div class="cv-header">
+                <div class="photo-section">
+                    <img src="" alt="Foto profilo" id="short-photo">
+                </div>
+                <div class="header-info">
+                    <h1 class="name" id="short-name"></h1>
+                    <p class="title" id="short-title"></p>
+                    <div class="contact-grid" id="short-contact-grid"></div>
+                </div>
+            </div>
+
+            <!-- EXPERIENCE -->
+            <div class="section">
+                <h2 class="section-title">Esperienza Lavorativa</h2>
+                <div id="short-experience-list"></div>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="section">
+                <h2 class="section-title">Competenze Tecniche</h2>
+                <div class="skills-grid" id="short-skills-grid"></div>
+            </div>
+
+            <!-- PROJECTS -->
+            <div class="section">
+                <h2 class="section-title">Progetti Chiave</h2>
+                <div id="short-projects-list"></div>
+            </div>
+
+            <!-- EDUCATION & KEY SKILLS -->
+            <div class="two-column">
+                <div class="section">
+                    <h2 class="section-title">Formazione</h2>
+                    <div id="short-education-list"></div>
+                </div>
+                <div class="section">
+                    <h2 class="section-title">Competenze Chiave</h2>
+                    <div id="short-key-skills"></div>
+                </div>
+            </div>
+
+            <!-- Certificazioni e Lingue -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;">
+                <div class="section">
+                    <h2 class="section-title" style="font-size:11px;">Certificazioni</h2>
+                    <div style="font-size:9px;" id="short-certifications"></div>
+                </div>
+                <div class="section">
+                    <h2 class="section-title" style="font-size:11px;">Lingue</h2>
+                    <div style="font-size:9px;" id="short-languages"></div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer" style="margin-top:10px;font-size:8px;" id="short-footer"></div>
+        </div>
+    </div>
+
+    <!-- EUROPASS CV LAYOUT -->
+    <div class="europass-container">
+        <div class="europass-header">
+            <div style="display:flex;align-items:center;gap:20px;">
+                <div
+                    style="width:100px;height:120px;border:3px solid white;overflow:hidden;border-radius:8px;flex-shrink:0;">
+                    <img src="" alt="Foto profilo" id="europass-photo" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div>
+                    <h1 class="europass-name" id="europass-name"></h1>
+                    <p class="europass-title" id="europass-title"></p>
+                </div>
+            </div>
+            <div class="europass-contact-grid" id="europass-contact-grid"></div>
+        </div>
+
+        <div class="europass-section">
+            <h2 class="europass-section-title">Esperienza Lavorativa</h2>
+            <div id="europass-experience-list"></div>
+        </div>
+
+        <div class="europass-section">
+            <h2 class="europass-section-title">Istruzione e Formazione</h2>
+            <div id="europass-education-list"></div>
+        </div>
+
+        <div class="europass-section">
+            <h2 class="europass-section-title">Competenze Personali</h2>
+            <div class="europass-skills-grid">
+                <div class="europass-skill-category">
+                    <div class="europass-skill-title">Competenze Linguistiche</div>
+                    <div id="europass-languages"></div>
+                </div>
+                <div class="europass-skill-category">
+                    <div class="europass-skill-title">Competenze Digitali</div>
+                    <div id="europass-digital-skills"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="europass-footer" id="europass-footer"></div>
+    </div>
+
+    <script src="cv-data.js"></script>
+    <script src="cv-render.js"></script>
+</body>
+
+</html>
